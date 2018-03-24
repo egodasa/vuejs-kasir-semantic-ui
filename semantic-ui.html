@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="semantic-ui.css" />
+  <title>Semantic UI Sandbox</title>
+</head>
+<body>
+  <div class="ui container" style="padding-bottom: 100px">
+
+    <!--HEADER -->
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+    <h3>Heading 3</h3>
+    <h4>Heading 4</h4>
+    <h5>Heading 5</h5>
+
+    <div class="ui huge header">Huge</div>
+    <div class="ui large header">Large</div>
+    <div class="ui medium header">Medium</div>
+    <div class="ui small header">Small</div>
+    <div class="ui tiny header">Tiny</div>
+
+    <hr />
+
+    <!-- BUTTONS -->
+    <h3>Buttons</h3>
+    <button class="ui button">Normal</button>
+    <button class="ui primary button">Primary</button>
+    <button class="ui secondary button">Secondary</button>
+    <button class="ui positive button">Positive</button>
+    <button class="ui negative button">Negative</button>
+    <br /><br />
+    <button class="ui red button">Red</button>
+    <button class="ui blue button">Blue</button>
+    <button class="ui green button">Green</button>
+    <button class="ui grey button">Grey</button>
+    <br /><br />
+    <button class="ui disabled red button">Disabled</button>
+    <button class="ui loading blue button">Loading</button>
+    <br /><br />
+    <button class="ui mini violet button">Mini</button>
+    <button class="ui tiny yellow button">Tiny</button>
+    <button class="ui small orange button">Small</button>
+    <button class="ui medium teal button">Medium</button>
+    <button class="ui large purple button">Large</button>
+    <button class="ui big black button">Big</button>
+    <button class="ui huge brown button">Huge</button>
+    <button class="ui massive olive button">Massive</button>
+    <br /><br />
+    <button class="ui basic red button">Basic Red</button>
+    <button class="ui basic green button">Basic Green</button>
+    <button class="ui basic blue button">Basic Blue</button>
+    <br /><br />
+    <button class="ui basic orange fluid button">Basic Fluid Orange</button>
+
+    <hr />
+
+    <!-- ICONS, LABELS & COMPLEX BUTTONS -->
+    <h3>Labels and Icons</h3>
+    <button class="ui icon green button">
+      <i class="cloud icon"></i>
+    </button>
+    <div class="ui labeled button">
+      <div class="ui blue button">
+        <i class="heart icon"></i> Labeled
+      </div>
+    </div>
+    <br /><br />
+    <div class="ui buttons">
+      <button class="ui button">One</button>
+      <button class="ui button">Two</button>
+      <button class="ui button">Three</button>
+    </div>
+    <br /><br />
+    <i class="add to calendar icon"></i>
+    <i class="comment icon"></i>
+    <i class="comment outline icon"></i>
+    <br /><br />
+    <div class="ui red label">
+      <i class="mail icon"></i> 23
+    </div>
+    <br /><br />
+    <form class="ui fluid form">
+      <div class="inline field">
+        <input type="text" />
+        <div class="ui left pointing label">
+          That username is taken
+        </div>
+      </div>
+    </form>
+
+    <hr />
+
+    <!-- BREADCRUMB -->
+    <h3>Breadcrumb</h3>
+    <div class="ui breadcrumb">
+      <a class="section">Home</a>
+      <div class="divider"> / </div>
+      <a class="section">Store</a>
+      <div class="divider"> / </div>
+      <a class="active section">T-Shirt</a>
+    </div>
+
+    <hr />
+
+    <!-- LISTS -->
+    <h3>Lists</h3>
+    <div class="ui list">
+      <div class="item">Apples</div>
+      <div class="item">Pears</div>
+      <div class="item">Oranges</div>
+    </div>
+
+    <div class="ui link list">
+      <div class="active item">Home</div>
+      <div class="item">About</div>
+      <div class="item">Jobs</div>
+    </div>
+
+    <div class="ui horizontal link list">
+      <div class="active item">Home</div>
+      <div class="item">About</div>
+      <div class="item">Jobs</div>
+    </div>
+
+    <hr />
+
+    <!-- FORM -->
+    <h3>Forms</h3>
+    <form class="ui form">
+      <div class="field">
+        <label>First Name</label>
+        <input type="text" name="first-name" placeholder="First Name">
+      </div>
+      <div class="field">
+        <label>Last Name</label>
+        <input type="text" name="last-name" placeholder="Last Name">
+      </div>
+      <div class="field">
+        <div class="ui checkbox">
+          <input type="checkbox">
+          <label>I agree to the Terms and Conditions</label>
+        </div>
+      </div>
+      <button class="ui button" type="button">Submit</button>
+    </form>
+
+    <div class="ui form">
+      <div class="inline fields">
+        <label for="">Phone Number</label>
+        <div class="field">
+          <input type="text" placeholder="(xxx)">
+        </div>
+        <div class="field">
+          <input type="text" placeholder="xxx">
+        </div>
+        <div class="field">
+          <input type="text" placeholder="xxxx">
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- ALERTS/MESSAGES -->
+    <h3>Messages</h3>
+    <div class="ui message">
+      <div class="header">Normal Message</div>
+      <p>This is a message</p>
+    </div>
+
+    <div class="ui error message">
+      <div class="header">Error Message</div>
+      <p>This is a message</p>
+    </div>
+
+    <div class="ui success message">
+      <div class="header">Success Message</div>
+      <p>This is a message</p>
+    </div>
+
+    <div class="ui purple message">
+      <div class="header">Purple Message</div>
+      <p>This is a message</p>
+    </div>
+
+    <hr />
+
+    <!-- TABLES/PAGINATION -->
+    <h3>Tables</h3>
+    <table class="ui celled three column table">
+      <thead>
+        <tr>
+          <th>Header</th>
+          <th>Header</th>
+          <th>Header</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="ui ribbon label">Ribbon Label</div>
+          </td>
+          <td>Cell</td>
+          <td>Cell</td>
+        </tr>
+        <tr class="positive">
+          <td>Cell</td>
+          <td>Cell</td>
+          <td>Cell</td>
+        </tr>
+        <tr class="negative">
+          <td>Cell</td>
+          <td>Cell</td>
+          <td>Cell</td>
+        </tr>
+        <tr class="warning">
+          <td>Cell</td>
+          <td>Cell</td>
+          <td>Cell</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="3">
+            <div class="ui right floated pagination menu">
+              <a href="" class="icon item">
+                <i class="left chevron icon"></i>
+              </a>
+              <a class="item">1</a>
+              <a class="item">2</a>
+              <a class="item">3</a>
+              <a class="item">4</a>
+              <a class="item">5</a>
+              <a class="icon item">
+                <i class="right chevron icon"></i>
+              </a>
+            </div>
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+
+    <hr />
+
+    <!-- SEGMENT -->
+    <h3>Segments</h3>
+    <div class="ui segment">
+      <p><strong>Segment</strong></p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero tempora laboriosam illo rem illum nam iste nulla laborum, voluptatum unde vitae ex ullam laudantium excepturi quidem consequuntur quia voluptates velit officiis incidunt? Velit dignissimos distinctio, cum, reprehenderit, doloremque ullam quia quidem eveniet provident delectus voluptatum repudiandae tenetur aspernatur ut dolorem consequatur. Laborum quibusdam magni commodi pariatur laboriosam. Iure cupiditate nemo harum similique ipsum fugit soluta iste. Mollitia necessitatibus tenetur architecto quisquam commodi similique quod ea, officia dolore dolorum aut minima, nobis. Cupiditate a deserunt ut, amet molestiae consequuntur totam, temporibus deleniti, voluptas ratione consequatur necessitatibus ab. Aut praesentium, doloremque consectetur.</p>
+    </div>
+
+    <div class="ui raised segment">
+      <p><strong>Raised Segment</strong></p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero tempora laboriosam illo rem illum nam iste nulla laborum, voluptatum unde vitae ex ullam laudantium excepturi quidem consequuntur quia voluptates velit officiis incidunt? Velit dignissimos distinctio, cum, reprehenderit, doloremque ullam quia quidem eveniet provident delectus voluptatum repudiandae tenetur aspernatur ut dolorem consequatur. Laborum quibusdam magni commodi pariatur laboriosam. Iure cupiditate nemo harum similique ipsum fugit soluta iste. Mollitia necessitatibus tenetur architecto quisquam commodi similique quod ea, officia dolore dolorum aut minima, nobis. Cupiditate a deserunt ut, amet molestiae consequuntur totam, temporibus deleniti, voluptas ratione consequatur necessitatibus ab. Aut praesentium, doloremque consectetur.</p>
+    </div>
+
+    <div class="ui stacked green segment">
+      <p><strong>Stacked Segment</strong></p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero tempora laboriosam illo rem illum nam iste nulla laborum, voluptatum unde vitae ex ullam laudantium excepturi quidem consequuntur quia voluptates velit officiis incidunt? Velit dignissimos distinctio, cum, reprehenderit, doloremque ullam quia quidem eveniet provident delectus voluptatum repudiandae tenetur aspernatur ut dolorem consequatur. Laborum quibusdam magni commodi pariatur laboriosam. Iure cupiditate nemo harum similique ipsum fugit soluta iste. Mollitia necessitatibus tenetur architecto quisquam commodi similique quod ea, officia dolore dolorum aut minima, nobis. Cupiditate a deserunt ut, amet molestiae consequuntur totam, temporibus deleniti, voluptas ratione consequatur necessitatibus ab. Aut praesentium, doloremque consectetur.</p>
+    </div>
+
+    <div class="ui piled segment">
+      <p><strong>Piled Segment</strong></p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero tempora laboriosam illo rem illum nam iste nulla laborum, voluptatum unde vitae ex ullam laudantium excepturi quidem consequuntur quia voluptates velit officiis incidunt? Velit dignissimos distinctio, cum, reprehenderit, doloremque ullam quia quidem eveniet provident delectus voluptatum repudiandae tenetur aspernatur ut dolorem consequatur. Laborum quibusdam magni commodi pariatur laboriosam. Iure cupiditate nemo harum similique ipsum fugit soluta iste. Mollitia necessitatibus tenetur architecto quisquam commodi similique quod ea, officia dolore dolorum aut minima, nobis. Cupiditate a deserunt ut, amet molestiae consequuntur totam, temporibus deleniti, voluptas ratione consequatur necessitatibus ab. Aut praesentium, doloremque consectetur.</p>
+    </div>
+
+    <div class="ui segments">
+      <div class="ui segment">
+        <p><strong>Segments</strong></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="ui red segment">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="ui green inverted segment">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="ui segment">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="ui segment">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- GROUPS/STEPS -->
+    <h3>Steps</h3>
+    <div class="ui steps">
+      <div class="step">
+        <i class="truck icon"></i>
+        <div class="content">
+          <div class="title">Shipping</div>
+          <div class="description">Choose your shipping icons</div>
+        </div>
+      </div>
+      <div class="active step">
+        <i class="payment icon"></i>
+        <div class="content">
+          <div class="title">Billing</div>
+          <div class="description">Enter billing information</div>
+        </div>
+      </div>
+      <div class="disabled step">
+        <i class="info icon"></i>
+        <div class="content">
+          <div class="title">Confirm Order</div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- CONTENT BLOCK -->
+    <h3>Content Block / Card</h3>
+    <div class="ui card">
+      <div class="content">
+        <div class="header">Content Block</div>
+        <div class="meta">SubHeader</div>
+      </div>
+      <div class="content">
+        <p>Middle</p>
+      </div>
+      <div class="content">
+        <p>Bottom</p>
+      </div>
+      <div class="ui bottom attached button">
+        Bottom Button
+      </div>
+    </div>
+
+    <hr />
+
+    Hello
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+</body>
+</html>

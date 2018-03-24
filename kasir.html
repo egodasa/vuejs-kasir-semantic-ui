@@ -1,0 +1,166 @@
+<html>
+	<head>
+		<title>Kasir</title>
+		<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="semantic-ui.css" />
+  <link rel="stylesheet" href="modal.min.css" />
+	</head>
+	<body>
+		<script src="vue.js"></script>
+		<script src="modal.min.js"></script>
+		<div id="kasir">
+			<template v-if="listTrx.length >= 1">
+				<div class="ui modal" :style="styleModal">
+					<i class="close icon"></i>
+					<div class="header">
+					    {{listTrx[selectedId].id_trx}}
+					</div>
+					<div class="content">
+						<table class="ui celled three column table">
+						<thead>
+						<tr>
+							<th>Nama</th>
+							<th>Harga</th>
+							<th>Jumlah</th>
+							<th>Total Harga</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr v-for="x in listTrx[selectedId].detail">
+							<td>{{x.nm_item}}</td>
+							<td>{{x.hrg_item}}</td>
+							<td>{{x.jml_item}}</td>
+							<td>{{x.hrg_item*x.jml_item}}</td>
+						</tr>
+						</tbody>
+					</table>
+						<br/>
+						<button class="ui green button" @click="toggleModal">Close</button>
+					</div>
+				</div>
+			</template>
+			<form class="ui form" @submit.prevent="addItem">
+				<div class="inline fields">
+					<div class="field">
+						<input v-model="id_trx" readonly />
+					</div>
+					<div class="field">
+					<input v-model="nm_item" placeholder="nama item" />
+					</div>
+					<div class="field">
+					<input v-model.Number="hrg_item" placeholder="harga" />
+					</div>
+					<div class="field">
+					<input v-model.Number="jml_item" placeholder="jumlah" />
+					</div>
+				</div>
+				<div class="inline fields">
+					<button type="submit" class="fluid ui green button">Add</button>
+					<button type="reset" class="fluid ui red button">Reset</button>
+				</div>
+			</form>
+		<h2>Daftar Beli</h2>
+		<table class="ui celled three column table">
+			<thead>
+			<tr>
+				<th>Nama</th>
+				<th>Harga</th>
+				<th>Jumlah</th>
+				<th>Total Harga</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr v-for="x in listItemTmp">
+				<td>{{x.nm_item}}</td>
+				<td>{{x.hrg_item}}</td>
+				<td>{{x.jml_item}}</td>
+				<td>{{x.hrg_item*x.jml_item}}</td>
+			</tr>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td colspan="2">Total</td>
+				<td>{{jml}}</td>
+				<td>{{total_hrg}}</td>
+			</tr>
+			<tr><td colspan="4"><button type="button" class="ui blue button" @click="addTrx">Save Trx</button></td></tr>
+			</tfoot>
+		</table>
+		<h2>Transaksi</h2>
+		<table class="ui celled three column table">
+			<thead>
+			<tr>
+				<th>ID TRX</th>
+				<th>Jumlah</th>
+				<th>Total Harga</th>
+				<th>Aksi</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr v-for="(x,index,key) in listTrx">
+				<td>{{x.id_trx}}</td>
+				<td>{{x.jml}}</td>
+				<td>{{x.total_hrg}}</td>
+				<td><button class="ui blue button" @click="showDetail(index)">Detail</button></td>
+			</tr>
+			</tbody>
+		</table>
+		</div>
+		<script>
+		new Vue({
+			el : "#kasir",
+			data () {
+				return { 
+					id_trx : new Date().getTime().toString(),
+					nm_item : null,
+					hrg_item : null,
+					jml_item : null,
+					listItemTmp : [],
+					listTrx : [],
+					total_hrg : 0,
+					jml : 0,
+					modal : false,
+					styleModal : 'display:none;',
+					selectedId : null
+				}
+			},
+			methods : {
+				toggleModal (){
+					this.modal = !this.modal
+					if(this.modal) this.styleModal = "display:block;"
+					else this.styleModal = "display:none;"
+				},
+				addItem (){
+					this.listItemTmp.push({nm_item : this.nm_item, hrg_item : this.hrg_item, jml_item : this.jml_item})
+					this.nm_item = null
+					this.hrg_item = null
+					this.jml_item = null
+					this.total_hrg = 0
+					this.jml = 0
+					for(let x = 0; x < this.listItemTmp.length; x++){
+						this.total_hrg += this.listItemTmp[x].hrg_item*this.listItemTmp[x].jml_item
+						this.jml += this.listItemTmp[x].jml_item
+					}
+				},
+				addTrx (){
+					this.listTrx.push({id_trx : this.id_trx, jml : this.jml, total_hrg : this.total_hrg, detail : this.listItemTmp})
+					this.id_trx = new Date().getTime().toString()
+					this.nm_item = null
+					this.hrg_item = null
+					this.jml_item = null
+					this.total_hrg = 0
+					this.jml = 0
+					this.listItemTmp = []
+					this.selectedId = 0
+				},
+				showDetail(x){
+					this.selectedId = x
+					this.toggleModal()
+				}
+			}
+		})
+		</script>
+	</body>
+</html>
