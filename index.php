@@ -18,12 +18,15 @@
 	<script src="vue.js"></script>
 	<div id="kasir" class="wrapper">
 		<div class="container">	
+<!--
+			Modal Detail Trx
+-->
 			<template v-if="listTrx.length >= 1">
-				<div class="modal fade in" :style="styleModal">
+				<div class="modal fade in" :style="styleModalTrxDetail">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" @click="toggleModal"><span aria-hidden="true">×</span></button>
+								<button type="button" class="close" @click="toggleModal('trx')"><span aria-hidden="true">×</span></button>
 								<h4 class="modal-title">{{'Detail Transaksi '+ listTrx[selectedId].id_trx}}</h4>
 							</div>
 							<div class="modal-body">
@@ -73,13 +76,72 @@
 								</table>
 							</div>
 							<div class="modal-footer">
-								<button class="btn btn-danger" @click="toggleModal">Close</button>
+								<button class="btn btn-danger" @click="toggleModal('trx')">Close</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</template>
-			<form class="ui form" @submit.prevent="addItem">
+<!--
+			Modal Produk
+-->
+			<div class="modal fade in" :style="styleModalProduk">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4>Daftar Produk</h4>
+							</div>
+							<div class="modal-body">
+								<form class="ui form" @submit.prevent="addProduk">
+									<div class="row">
+										<div class="col-xs-12">
+											<div class="form-group">
+												<label>Nama Produk</label>
+												<input v-model="nm_produk" class="form-control"/>
+											</div>
+										</div>
+										<div class="col-xs-6">
+											<div class="form-group">
+												<label>Harga Produk</label>
+												<input v-model.Number="hrg_produk" type="number" class="form-control"/>
+											</div>
+										</div>
+										<div class="col-xs-6">
+											<div class="form-group">
+												<label>Stok</label>
+												<input v-model.Number="stok" type="number" class="form-control"/>
+											</div>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-primary">Tambah Produk</button>
+								</form>
+								<table class="table table-hover table-bordered">
+								<thead>
+								<tr>
+									<th>Nama</th>
+									<th>Harga</th>
+									<th>Stok</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr v-for="x in listProduk">
+									<td>{{x.nm_produk}}</td>
+									<td>{{x.hrg_produk}}</td>
+									<td>{{x.stok}}</td>
+								</tr>
+								</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-danger" @click="toggleModal('produk')">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+<!--
+		Tambah Item ke trx
+-->
+			<form @submit.prevent="addItem">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
@@ -90,13 +152,15 @@
 					<div class="col-md-4 col-xs-12">
 						<div class="form-group">
 							<label>Nama Barang</label>
-							<input v-model="nm_item" class="form-control" placeholder="nama item" />
+							<select v-model="selectedProduk" class="form-control">
+								<option v-for="x in listProduk" :value="x">{{x.nm_produk}}</option>
+							</select>
 						</div>
 					</div>
 					<div class="col-md-4 col-xs-12">
 						<div class="form-group">
 							<label>Harga Barang</label>
-							<input type="number" v-model.Number="hrg_item" class="form-control" placeholder="harga" />
+							<input type="number" v-model.Number="selectedProduk.hrg_produk" class="form-control" placeholder="harga" disabled />
 						</div>
 					</div>
 					<div class="col-md-4 col-xs-12">
@@ -110,13 +174,21 @@
 							<button type="reset" class="btn btn-block btn-danger">Reset</button>
 						</div>
 					</div>
-					<div class="col-md-10 col-xs-12">
+					<div class="col-md-7 col-xs-12">
 						<div class="form-group">
 							<button type="submit" class="btn btn-block btn-primary">Tambahkan Ke trx</button>
 						</div>
 					</div>
+					<div class="col-md-3 col-xs-12">
+						<div class="form-group">
+							<button type="button" class="btn btn-block btn-primary" @click="toggleModal('produk')">Tambah Produk</button>
+						</div>
+					</div>
 				</div>
 			</form>
+<!--
+			Daftar item pada trx
+-->
 			<h2>Daftar Beli</h2>
 			<table class="table table-hover table-bordered">
 				<thead>
@@ -150,6 +222,9 @@
 					</tr>
 				</tfoot>
 			</table>
+<!--
+			Form pembayaran
+-->
 			<div class="row">
 				<div class="col-md-6 col-xs-12">
 					<div class="form-group">
@@ -182,6 +257,9 @@
 				</div>
 
 			</div>
+<!--
+			Tabel trx
+-->
 			<h2>Transaksi</h2>
 			<table class="table table-hover">
 				<thead>
@@ -221,17 +299,25 @@
 			data() {
 				return {
 					id_trx: new Date().getTime().toString(),
-					nm_item: null,
-					hrg_item: null,
 					jml_item: null,
 					listItemTmp: [],
 					listTrx: [],
 					total_hrg: 0,
 					jml: 0,
-					modal: false,
-					styleModal: 'display:none;',
+					modalTrxDetail: false,
+					styleModalTrxDetail: 'display:none;',
 					selectedId: null,
-					dibayar : 0
+					dibayar : 0,
+					listProduk : [
+						{id_produk : "1", nm_produk : "Keyboard", hrg_produk : 250000, stok : 10},
+						{id_produk : "2", nm_produk : "Mouse", hrg_produk : 25000, stok : 20}
+					],
+					nm_produk : null,
+					hrg_produk : 0,
+					stok : 0,
+					modalProduk: false,
+					styleModalProduk: 'display:none;',
+					selectedProduk : {}
 				}
 			},
 			computed : {
@@ -244,13 +330,27 @@
 				}
 			},
 			methods: {
+				addProduk (){
+					this.listProduk.push({
+						id_produk : new Date().getTime().toString(),
+						nm_produk : this.nm_produk,
+						hrg_produk : this.hrg_produk,
+						stok : this.stok
+					})
+					this.resetProduk()
+				},
+				resetProduk (){
+					this.nm_produk = null
+					this.hrg_produk = 0
+					this.stok = 0
+				},
 				resetListItem (){
 					this.listItemTmp = []
 					this.resetItem()
 				},
 				resetItem (){
-					this.nm_item = null
-					this.hrg_item = null
+					this.selectedProduk = {}
+					this.selectedProduk.hrg_produk = 0
 					this.jml_item = null
 				},
 				resetTrx (){
@@ -263,15 +363,21 @@
 					this.resetListItem()
 					this.resetItem()
 				},
-				toggleModal() {
-					this.modal = !this.modal
-					if (this.modal) this.styleModal = "display:block;"
-					else this.styleModal = "display:none;"
+				toggleModal(modal) {
+					if(modal == 'trx'){
+						this.modalTrxDetail = !this.modalTrxDetail
+						if (this.modalTrxDetail) this.styleModalTrxDetail = "display:block;"
+						else this.styleModalTrxDetail = "display:none;"
+					}else{
+						this.modalProduk = !this.modalProduk
+						if (this.modalProduk) this.styleModalProduk = "display:block;"
+						else this.styleModalProduk = "display:none;"
+					}
 				},
 				addItem() {
 					this.listItemTmp.push({
-						nm_item: this.nm_item,
-						hrg_item: this.hrg_item,
+						nm_item: this.selectedProduk.nm_produk,
+						hrg_item: this.selectedProduk.hrg_produk,
 						jml_item: this.jml_item
 					})
 					this.nm_item = null
@@ -307,7 +413,7 @@
 				},
 				showDetail(x) {
 					this.selectedId = x
-					this.toggleModal()
+					this.toggleModal('trx')
 				}
 			}
 		})
