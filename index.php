@@ -80,6 +80,7 @@
 						</div>
 						<div class="form-group">
 							<button type="button" class="btn btn-block btn-primary" @click="addTrx">Simpan Trx</button>
+							<button type="button" class="btn btn-block btn-danger" @click="resetTrx">Reset Trx</button>
 						</div>
 					</div>
 					<div class="col-md-4 col-xs-12">
@@ -100,14 +101,10 @@
 							<input v-model.Number="jml_item" class="form-control" placeholder="jumlah" />
 						</div>
 					</div>
-					<div class="col-md-3 col-xs-3">
-						<div class="form-group">
-							<button type="reset" class="btn btn-block btn-danger">Reset</button>
-						</div>
-					</div>
-					<div class="col-md-9 col-xs-9">
+					<div class="col-xs-12">
 						<div class="form-group">
 							<button type="submit" class="btn btn-block btn-primary">Tambahkan Ke trx</button>
+							<button type="reset" class="btn btn-block btn-danger">Reset</button>
 						</div>
 					</div>
 				</div>
@@ -123,12 +120,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="x in listItemTmp">
-						<td>{{x.nm_item}}</td>
-						<td>{{x.hrg_item}}</td>
-						<td>{{x.jml_item}}</td>
-						<td>{{x.hrg_item*x.jml_item}}</td>
-					</tr>
+					<template v-if="listTrx.length == 0">
+						<tr>
+							<td colspan="4" class="text-center">Daftar Beli Kosong</td>
+						</tr>
+					</template>
+					<template v-else>
+						<tr v-for="x in listItemTmp">
+							<td>{{x.nm_item}}</td>
+							<td>{{x.hrg_item}}</td>
+							<td>{{x.jml_item}}</td>
+							<td>{{x.hrg_item*x.jml_item}}</td>
+						</tr>
+					</template>
 				</tbody>
 				<tfoot>
 					<tr>
@@ -149,12 +153,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(x,index,key) in listTrx">
-						<td>{{x.id_trx}}</td>
-						<td>{{x.jml}}</td>
-						<td>{{x.total_hrg}}</td>
-						<td><button class="btn btn-primary" @click="showDetail(index)">Detail</button></td>
-					</tr>
+					<template v-if="listTrx.length == 0">
+						<tr>
+							<td colspan="4" class="text-center">Transaksi Kosong</td>
+						</tr>
+					</template>
+					<template v-else>
+						<tr v-for="(x,index,key) in listTrx">
+							<td>{{x.id_trx}}</td>
+							<td>{{x.jml}}</td>
+							<td>{{x.total_hrg}}</td>
+							<td><button class="btn btn-primary" @click="showDetail(index)">Detail</button></td>
+						</tr>
+					</template>
 				</tbody>
 			</table>
 		</div>
@@ -222,10 +233,24 @@
 					this.jml = 0
 					this.listItemTmp = []
 					this.selectedId = 0
+					this.kembalian = 0
+					this.dibayar = 0
 				},
 				showDetail(x) {
 					this.selectedId = x
 					this.toggleModal()
+				},
+				resetTrx(){
+					this.listItemTmp = []
+					this.selectedId = 0
+					this.kembalian = 0
+					this.dibayar = 0
+					this.nm_item = null
+					this.hrg_item = null
+					this.jml_item = null
+					this.total_hrg = 0
+					this.jml = 0
+					this.id_trx = new Date().getTime().toString()
 				}
 			}
 		})
