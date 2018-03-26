@@ -25,7 +25,7 @@
 	<div id="kasir" class="wrapper">
 		<div class="container">	
 <!--
-			Modal Detail Trx
+			Modal Detail Transaksi
 -->
 			<template v-if="listTrx.length >= 1">
 				<div class="modal fade in" :style="styleModalTrxDetail">
@@ -127,13 +127,17 @@
 									<th>Nama</th>
 									<th>Harga</th>
 									<th>Stok</th>
+									<th>Aksi</th>
 								</tr>
 								</thead>
 								<tbody>
-								<tr v-for="x in listProduk">
+								<tr v-for="(x,index,key) in listProduk">
 									<td>{{x.nm_produk}}</td>
 									<td>{{x.hrg_produk}}</td>
 									<td>{{x.stok}}</td>
+									<td>
+										<button type="button" class="btn btn-danger" @click="removeProduk(index)">Hapus</button>
+									</td>
 								</tr>
 								</tbody>
 								</table>
@@ -144,66 +148,120 @@
 						</div>
 					</div>
 				</div>
-<!--
-		Tambah Item ke trx
--->		<div class="box">
+		<div class="box">
 			<div class="box-body">
-				<form @submit.prevent="addItem">
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="form-group">
-								<label>ID TRX</label>
-								<input v-model="id_trx" class="form-control" disabled />
-							</div>
-						</div>
-						<div class="col-md-4 col-xs-12">
-							<div class="form-group">
-								<label>Nama Barang</label>
-								<select ref="pilihItem" v-model="selectedProduk" class="form-control">
-									<option v-for="x in listProduk" :value="x">{{x.nm_produk}}</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-4 col-xs-12">
-							<div class="form-group">
-								<label>Harga Barang</label>
-								<input type="number" v-model.Number="selectedProduk.hrg_produk" class="form-control" placeholder="harga" disabled />
-							</div>
-						</div>
-						<div class="col-md-4 col-xs-12">
-							<div class="form-group">
-								<label>Jumlah Beli</label>
-								<input type="number" v-model.Number="jml_item" class="form-control" placeholder="jumlah" />
-							</div>
-						</div>
-						<div class="col-md-2 col-xs-12">
-							<div class="form-group">
-								<button type="reset" class="btn btn-block btn-danger">Reset</button>
-							</div>
-						</div>
-						<div class="col-md-7 col-xs-12">
-							<div class="form-group">
-								<button type="submit" class="btn btn-block btn-primary">Tambahkan Ke trx</button>
-							</div>
-						</div>
-						<div class="col-md-3 col-xs-12">
-							<div class="form-group">
-								<button type="button" class="btn btn-block btn-primary" @click="toggleModal('produk')">Tambah Produk</button>
-							</div>
+				<div class="row">
+					<div class="col-md-8 col-xs-12">
+						<div class="form-group">
+							<label>ID TRX</label>
+							<input v-model="id_trx" class="form-control" disabled />
 						</div>
 					</div>
-				</form>
+					<div class="col-md-4 col-xs-12">
+						<div class="form-group">
+							<label>Kelola Produk</label>
+							<button type="button" class="btn btn-block btn-primary" @click="toggleModal('produk')">Tambah Produk</button>
+						</div>
+					</div>
+				</div>
 			</div>
-			
+				</div>
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+				<!--Tambah Item ke Transaksi-->		
+				<div class="box">
+					<div class="box-header with-border">
+						<h2 class="box-title">Pilih Produk</h2>
+					</div>
+					<div class="box-body">
+						<form @submit.prevent="addItem">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label>Nama Barang</label>
+										<select ref="pilihItem" v-model="selectedProduk" class="form-control">
+											<option v-for="x in listProduk" :value="x">{{x.nm_produk}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group">
+										<label>Harga Barang</label>
+										<input type="number" v-model.Number="selectedProduk.hrg_produk" class="form-control" placeholder="harga" disabled />
+									</div>
+								</div>
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group">
+										<label>Jumlah Beli</label>
+										<input type="number" v-model.Number="jml_item" class="form-control" placeholder="jumlah" />
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group">
+										<button type="reset" class="btn btn-block btn-danger">Reset</button>
+									</div>
+								</div>
+								<div class="col-md-8 col-xs-12">
+									<div class="form-group">
+										<button type="submit" class="btn btn-block btn-primary" :disabled="!itemSaveAble">Tambahkan Ke Transaksi</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-xs-12">
+				<!--Form pembayaran-->
+				<div class="box">
+					<div class="box-header with-border">
+						<h2 class="box-title">Pembayaran</h2>
+					</div>
+					<div class="box-body">
+						<form @submit.prevent="addTrx">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label>Total Bayar</label>
+										<input v-model="total_hrg" class="form-control" disabled />
+									</div>
+								</div>
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group">
+										<label>Jumlah Dibayar</label>
+										<input type="number" v-model="dibayar" class="form-control" />
+									</div>
+								</div>
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group">
+										<label>Kembalian</label>
+										<input v-model="kembalian" class="form-control" disabled/>
+									</div>
+								</div>
+								
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group">
+										<button type="button" class="btn btn-block btn-danger" @click="resetTrx">Reset Transaksi</button>
+									</div>
+								</div>
+								<div class="col-md-8 col-xs-12">
+									<div class="form-group">
+										<button type="submit" class="btn btn-block btn-primary" :disabled="!trxSaveAble">Simpan Transaksi</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
-<!--
-			Daftar item pada trx
--->
-		<div class="box">
+<!--Daftar item pada Transaksi-->
+		<div class="box box-widget">
 			<div class="box-header with-border">
-				<h3 class="box-title">Barang yang dibeli</h3>
+				<h2 class="box-title">Barang yang dibeli</h2>
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 			</div>
-			<div class="box-body">
+			<div class="box-body table-responsive">
 				<table class="table table-hover table-bordered">
 					<thead>
 						<tr>
@@ -211,82 +269,37 @@
 							<th>Harga</th>
 							<th>Jumlah</th>
 							<th>Total Harga</th>
+							<th>Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
 						<template v-if="listItemTmp.length == 0">
 							<tr>
-								<td colspan="4" class="text-center">Daftar Beli Kosong</td>
+								<td colspan="5" class="text-center">Daftar Beli Kosong</td>
 							</tr>
 						</template>
 						<template v-else>
-							<tr v-for="x in listItemTmp">
+							<tr v-for="(x,index,key) in listItemTmp">
 								<td>{{x.nm_item}}</td>
 								<td>{{x.hrg_item}}</td>
 								<td>{{x.jml_item}}</td>
 								<td>{{x.hrg_item*x.jml_item}}</td>
+								<td><button type="button" class="btn btn-danger" @click="removeItem(index)">Hapus</button></td>
 							</tr>
 						</template>
 					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="2">Total</td>
-							<td>{{jml}}</td>
-							<td>{{total_hrg}}</td>
-						</tr>
-					</tfoot>
 				</table>
 			</div>
 		</div>
 <!--
-			Form pembayaran
+			Tabel Transaksi
 -->
-		<div class="box">
-			<div class="box-header with-border">
-				<h3 class="box-title">Pembayaran</h3>
-			</div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-6 col-xs-12">
-						<div class="form-group">
-							<label>Total Bayar</label>
-							<input v-model="total_hrg" class="form-control" disabled />
-						</div>
-					</div>
-					<div class="col-md-6 col-xs-12">
-						<div class="form-group">
-							<label>Jumlah Dibayar</label>
-							<input type="number" v-model="dibayar" class="form-control" />
-						</div>
-					</div>
-					<div class="col-xs-12">
-						<div class="form-group">
-							<label>Kembalian</label>
-							<input v-model="kembalian" class="form-control" disabled/>
-						</div>
-					</div>
-					
-					<div class="col-md-2 col-xs-12">
-						<div class="form-group">
-							<button type="button" class="btn btn-block btn-danger" @click="resetTrx">Reset Trx</button>
-						</div>
-					</div>
-					<div class="col-md-10 col-xs-12">
-						<div class="form-group">
-							<button type="button" class="btn btn-block btn-primary" @click="addTrx">Simpan Trx</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-<!--
-			Tabel trx
--->
-		<div class="box">
+		<div class="box box-widget">
 			<div class="box-header with-border">
 				<h2 class="box-title">Daftar Transaksi</h2>
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 			</div>
-			<div class="box-body">
+			<div class="box-body table-responsive">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -300,7 +313,7 @@
 					<tbody>
 						<template v-if="listTrx.length == 0">
 							<tr>
-								<td colspan="4" class="text-center">Transaksi Kosong</td>
+								<td colspan="5" class="text-center">Transaksi Kosong</td>
 							</tr>
 						</template>
 						<template v-else>
@@ -309,7 +322,10 @@
 								<td>{{x.tgl_trx.toString()}}</td>
 								<td>{{x.jml}}</td>
 								<td>{{x.total_hrg}}</td>
-								<td><button class="btn btn-primary" @click="showDetail(index)">Detail</button></td>
+								<td>
+									<button class="btn btn-primary" @click="showDetail(index)">Detail</button>
+									<button type="button" class="btn btn-danger" @click="removeTrx(index)">Hapus</button>
+								</td>
 							</tr>
 						</template>
 					</tbody>
@@ -328,7 +344,7 @@
 			data() {
 				return {
 					id_trx: new Date().getTime().toString(),
-					jml_item: null,
+					jml_item: 0,
 					listItemTmp: [],
 					listTrx: [],
 					total_hrg: 0,
@@ -356,6 +372,12 @@
 					}else{
 						return 'Kurang Rp.'+(this.dibayar - this.total_hrg)*-1
 					}
+				},
+				itemSaveAble : function(){
+					return this.jml_item != 0 && this.selectedProduk != null && this.jml_item != null
+				},
+				trxSaveAble : function(){
+					return this.listItemTmp.length != 0 && this.dibayar != 0 && this.dibayar != null
 				}
 			},
 			created (){
@@ -416,39 +438,59 @@
 						else this.styleModalProduk = "display:none;"
 					}
 				},
-				addItem() {
-					this.listItemTmp.push({
-						nm_item: this.selectedProduk.nm_produk,
-						hrg_item: this.selectedProduk.hrg_produk,
-						jml_item: this.jml_item
-					})
-					this.nm_item = null
-					this.hrg_item = null
-					this.jml_item = null
+				refreshItem (){
 					this.total_hrg = 0
 					this.jml = 0
 					for (let x = 0; x < this.listItemTmp.length; x++) {
 						this.total_hrg += this.listItemTmp[x].hrg_item * this.listItemTmp[x].jml_item
 						this.jml += this.listItemTmp[x].jml_item
 					}
-					this.$refs.pilihItem.focus()
+				},
+				addItem() {
+					if(this.jml_item != 0 && this.selectedProduk  != null && this.jml_item != null){
+						this.listItemTmp.push({
+							nm_item: this.selectedProduk.nm_produk,
+							hrg_item: this.selectedProduk.hrg_produk,
+							jml_item: this.jml_item
+						})
+						this.nm_item = null
+						this.hrg_item = null
+						this.jml_item = null
+						this.refreshItem()
+						this.$refs.pilihItem.focus()
+					}
+				},
+				removeItem (x){
+					this.listItemTmp.splice(x,1)
+					this.refreshItem()
+					this.setDataStorage()
 				},
 				addTrx() {
-					this.listTrx.push({
-						id_trx: this.id_trx,
-						jml: this.jml,
-						total_hrg: this.total_hrg,
-						kembalian : this.kembalian,
-						dibayar : this.dibayar,
-						detail: this.listItemTmp,
-						tgl_trx : new Date()
-					})
+					if(this.listItemTmp.length != 0 && this.dibayar != 0 && this.dibayar != null){
+						this.listTrx.push({
+							id_trx: this.id_trx,
+							jml: this.jml,
+							total_hrg: this.total_hrg,
+							kembalian : this.kembalian,
+							dibayar : this.dibayar,
+							detail: this.listItemTmp,
+							tgl_trx : new Date()
+						})
+						this.setDataStorage()
+						this.resetTrx()
+					}
+				},
+				removeTrx (x){
+					this.listTrx.splice(x,1)
 					this.setDataStorage()
-					this.resetTrx()
 				},
 				showDetail(x) {
 					this.selectedId = x
 					this.toggleModal('trx')
+				},
+				removeProduk(x){
+					this.listProduk.splice(x,1)
+					this.setDataStorage()
 				}
 			}
 		})
